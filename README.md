@@ -61,3 +61,12 @@ Espaço Alocado no Disco          : 12288 bytes (3 blocos de 4 KB)
 Fragmentação Interna             : 2048 bytes (50% de desperdício no Bloco 04)
 Fragmentação Externa             : 0 bytes
 Necessidade de Compactação       : NÃO (Blocos alocados via i-node indexado)
+
+## Etapa 2: Escalonamento de Disco e RAID 5
+
+O simulador foi expandido para demonstrar as operações de disco integradas às requisições do sistema de arquivos.
+
+### Demonstração de Escalonamento SSTF
+Comando executado:
+```bash
+> write_file /sistema/logs/app.log "Novo Registro"
