@@ -70,3 +70,26 @@ O simulador foi expandido para demonstrar as operações de disco integradas às
 Comando executado:
 ```bash
 > write_file /sistema/logs/app.log "Novo Registro"
+
+
+[E/S] Requisições de leitura/escrita pendentes nas trilhas: [98, 183, 37, 122, 14]
+Posição atual da cabeça de leitura: Trilha 53
+
+--- ESCALONAMENTO DE DISCO: SSTF (Shortest Seek Time First) ---
+Ordem de Atendimento : 53 -> 37 -> 14 -> 98 -> 122 -> 183
+Deslocamento da Cabeça: |53-37| + |37-14| + |14-98| + |98-122| + |122-183|
+Total de Movimento    : 16 + 23 + 84 + 24 + 61 = 208 trilhas
+
+> write_file /dados/planilha.csv --size 8KB
+
+Arranjo Ativo: RAID 5 (3 Discos Físicos, Blocos de 4 KB)
+
+[E/S - DISTRIBUIÇÃO EM DISCO]
+Disco 1: [Bloco 01: Dados da Planilha.csv - Part 1 (4 KB)]
+Disco 2: [Bloco 02: Dados da Planilha.csv - Part 2 (4 KB)]
+Disco 3: [PARIDADE : XOR(Bloco 01, Bloco 02)]
+
+[TESTE DE FALHA SIMULADO]
+- Falha forçada no Disco 2!
+
+- Recuperando Bloco 02 via operação XOR: (Disco 1 XOR Disco 3) -> Reconstrução [OK]
